@@ -1,0 +1,51 @@
+# Build artifacts
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# Visual Studio / VS Code
+.vscode/
+.vs/
+
+# ASP.NET Core environment files
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.json
+
+# SQLite database files
+*.db
+*.db-shm
+*.db-wal
+
+# Publish output
+publish/
+out/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# JetBrains Rider
+.idea/
+
+# OneDrive sync metadata
+*.lnk
+~$*
+
+# MAUI build artifacts (future-proofing)
+*.apk
+*.aab
+*.ipa
+*.app
+*.xcarchive
+*.xcworkspace
+*.xcodeproj
