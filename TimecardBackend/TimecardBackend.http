@@ -1,0 +1,6 @@
+@TimecardBackend_HostAddress = http://localhost:5090
+
+GET {{TimecardBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
