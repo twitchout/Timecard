@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TimecardApp.Pages.Timecard"
+             Title="Timecard">
+    
+    <VerticalStackLayout
+        Padding="30,0"
+        Spacing="20"
+        VerticalOptions="Center">
+
+        <Border
+            StrokeShape="RoundRectangle 10"
+            MaximumWidthRequest="750"
+            Margin="0,0,0,100">
+
+            <StackLayout
+                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}"
+                Padding="15">
+
+                <Label 
+                    Text="This Week's Time Punches:"
+                    VerticalOptions="Center"
+                    Style="{StaticResource Headline}"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    SemanticProperties.HeadingLevel="Level1" />
+
+                
+
+            </StackLayout>
+        </Border>
+    </VerticalStackLayout>
+</ContentPage>

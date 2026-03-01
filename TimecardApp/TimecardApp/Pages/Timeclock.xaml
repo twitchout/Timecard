@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TimecardApp.Pages.Timeclock"
+             Title="Timeclock">
+    
+    <VerticalStackLayout
+        Padding="30,0"
+        Spacing="20"
+        VerticalOptions="Center">
+
+        <Border
+            StrokeShape="RoundRectangle 10"
+            MaximumWidthRequest="750"
+            Margin="0,0,0,100">
+
+            <StackLayout
+                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}"
+                Padding="15">
+                
+                <Label 
+                    Text="Time Clock"
+                    VerticalOptions="Center"
+                    Style="{StaticResource Headline}"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    SemanticProperties.HeadingLevel="Level1" />
+                
+                <Button
+                    Text="Clock In"
+                    Margin="0, 30, 0, 0"
+                    x:Name="TimePunchBtn"
+                    SemanticProperties.Hint="Punches the time clock" />
+                
+            </StackLayout>
+        </Border>
+
+        <Label 
+            Text=""
+            x:Name="TimePunchAlert"
+            Style="{StaticResource SubHeadline}"
+            SemanticProperties.HeadingLevel="Level2"
+            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+
+    </VerticalStackLayout>
+</ContentPage>
