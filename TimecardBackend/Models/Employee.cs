@@ -27,6 +27,10 @@ public class Employee
 
     public bool IsActive { get; set; } = true;
 
+    [Required]
+    [MaxLength(255)]
+    public string PasswordHash { get; set; } = string.Empty;
+
     public long CreatedAt { get; set; }
 
     public long? UpdatedAt { get; set; }

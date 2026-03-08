@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TimecardApp.Pages.AdminPanel"
+             Title="Admin Panel">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,20" Spacing="25">
+
+            <Label Text="Admin Panel"
+                   Style="{StaticResource Headline}"
+                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                   SemanticProperties.HeadingLevel="Level1"
+                   Margin="0,0,0,10" />
+
+            <!-- Employee Selector -->
+            <Border StrokeShape="RoundRectangle 10"
+                    Padding="15"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Select Employee"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                    <Picker x:Name="EmployeePicker"
+                            Title="Choose an employee..."
+                            SelectedIndexChanged="OnEmployeeSelected"
+                            TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Quick Actions -->
+            <Border StrokeShape="RoundRectangle 10"
+                    Padding="15"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Quick Actions"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                    <Button Text="➕ Add New Employee"
+                            x:Name="AddEmployeeBtn"
+                            Clicked="OnAddEmployeeClicked"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                            TextColor="White" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Selected Employee Info -->
+            <Label x:Name="SelectedEmployeeLabel"
+                   Text="Select an employee to view their time entries"
+                   FontSize="18"
+                   FontAttributes="Italic"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"
+                   HorizontalOptions="Center"
+                   IsVisible="True" />
+
+            <!-- Approve All Button -->
+            <Button x:Name="ApproveAllBtn"
+                    Text="✓ Approve All Pending Entries"
+                    BackgroundColor="Green"
+                    TextColor="White"
+                    Clicked="OnApproveAllClicked"
+                    IsVisible="False"
+                    Margin="0,0,0,10" />
+
+            <!-- Time Entries Collection -->
+            <CollectionView x:Name="TimeEntriesCollection"
+                            ItemsSource="{Binding TimeEntries}"
+                            SelectionMode="None"
+                            IsVisible="False">
+                <CollectionView.EmptyView>
+                    <Label Text="No time entries found for this employee."
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"
+                           Margin="0,20,0,0" />
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeShape="RoundRectangle 10"
+                                Margin="0,0,0,15"
+                                Padding="15"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}"
+                                Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}">
+
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" 
+                                  ColumnDefinitions="Auto,*"
+                                  RowSpacing="8"
+                                  ColumnSpacing="10">
+
+                                <!-- Clock In -->
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="Clock In:"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding ClockInTime}"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+
+                                <!-- Clock Out -->
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       Text="Clock Out:"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                <Label Grid.Row="1" Grid.Column="1"
+                                       Text="{Binding ClockOutTime}"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+
+                                <!-- Duration -->
+                                <Label Grid.Row="2" Grid.Column="0"
+                                       Text="Duration:"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                <Label Grid.Row="2" Grid.Column="1"
+                                       Text="{Binding Duration}"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+
+                                <!-- Approval Status -->
+                                <Label Grid.Row="3" Grid.Column="0"
+                                       Text="Status:"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                <Label Grid.Row="3" Grid.Column="1"
+                                       Text="{Binding ApprovalStatus}"
+                                       TextColor="{Binding ApprovalColor}"
+                                       FontAttributes="Bold" />
+
+                                <!-- Notes -->
+                                <Label Grid.Row="4" Grid.Column="0"
+                                       Text="Notes:"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                <Label Grid.Row="4" Grid.Column="1"
+                                       Text="{Binding Notes}"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+
+                                <!-- Action Buttons -->
+                                <Grid Grid.Row="5" Grid.ColumnSpan="2"
+                                      ColumnDefinitions="*,*,*"
+                                      ColumnSpacing="10"
+                                      Margin="0,10,0,0">
+                                    <Button Grid.Column="0"
+                                            Text="✏️ Edit"
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                            TextColor="White"
+                                            Clicked="OnEditTimeEntry"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Grid.Column="1"
+                                            Text="✓ Approve"
+                                            BackgroundColor="Green"
+                                            TextColor="White"
+                                            Clicked="OnApproveTimeEntry"
+                                            CommandParameter="{Binding .}"
+                                            IsVisible="{Binding CanApprove}" />
+                                    <Button Grid.Column="2"
+                                            Text="🗑️ Delete"
+                                            BackgroundColor="Red"
+                                            TextColor="White"
+                                            Clicked="OnDeleteTimeEntry"
+                                            CommandParameter="{Binding .}" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

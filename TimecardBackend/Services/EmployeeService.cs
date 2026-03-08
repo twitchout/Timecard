@@ -13,6 +13,8 @@ public interface IEmployeeService
     Task<EmployeeDto?> UpdateAsync(int id, UpdateEmployeeDto dto);
     Task<bool> DeleteAsync(int id);
     Task<bool> ExistsAsync(int id);
+    Task<LoginResponseDto?> AuthenticateAsync(LoginDto dto);
+    Task<bool> SetPasswordAsync(int id, string password);
 }
 
 public class EmployeeService : IEmployeeService
@@ -52,6 +54,7 @@ public class EmployeeService : IEmployeeService
             Role = dto.Role,
             Department = dto.Department,
             HourlyRate = dto.HourlyRate,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
             IsActive = true,
             CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
         };
@@ -112,5 +115,42 @@ public class EmployeeService : IEmployeeService
             CreatedAt = employee.CreatedAt,
             UpdatedAt = employee.UpdatedAt
         };
+    }
+
+    public async Task<LoginResponseDto?> AuthenticateAsync(LoginDto dto)
+    {
+        var employee = await _db.Employees
+            .FirstOrDefaultAsync(e => e.Email == dto.Email && e.IsActive);
+
+        if (employee == null)
+        {
+            return null;
+        }
+
+        // Verify password hash
+        if (!BCrypt.Net.BCrypt.Verify(dto.Password, employee.PasswordHash))
+        {
+            return null;
+        }
+
+        return new LoginResponseDto
+        {
+            EmployeeId = employee.Id,
+            Name = employee.Name,
+            Email = employee.Email,
+            Role = employee.Role
+        };
+    }
+
+    public async Task<bool> SetPasswordAsync(int id, string password)
+    {
+        var employee = await _db.Employees.FindAsync(id);
+        if (employee == null) return false;
+
+        employee.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
+        employee.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        
+        await _db.SaveChangesAsync();
+        return true;
     }
 }

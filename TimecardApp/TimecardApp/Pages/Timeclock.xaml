@@ -24,13 +24,52 @@
                     Style="{StaticResource Headline}"
                     TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
                     SemanticProperties.HeadingLevel="Level1" />
-                
+
+                <!-- shameless midnight burger reference -->
+                <Label
+                  Text="Let's start the shift!"
+                  x:Name="GreetingLabel"
+                  VerticalOptions="Center"
+                  HorizontalOptions="Center"
+                  FontSize="Medium"
+                    Margin="0,20,0,0"
+                  Style="{StaticResource SubHeadline}"
+                  TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                  SemanticProperties.HeadingLevel="Level2" />
+
+                <!-- Notes Entry (only visible when clocking out) -->
+                <Label
+                    x:Name="NotesLabel"
+                    Text="Notes (Optional):"
+                    Margin="0,20,0,5"
+                    FontAttributes="Bold"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    IsVisible="False" />
+                <Editor
+                    x:Name="NotesEntry"
+                    Placeholder="Add any notes about this shift..."
+                    HeightRequest="80"
+                    MaxLength="500"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"
+                    IsVisible="False" />
+
                 <Button
                     Text="Clock In"
-                    Margin="0, 30, 0, 0"
+                    Margin="0, 20, 0, 0"
                     x:Name="TimePunchBtn"
                     SemanticProperties.Hint="Punches the time clock" />
-                
+
+                <Button
+                    Text="View My Timecard"
+                    Margin="0, 15, 0, 0"
+                    x:Name="ViewTimecardBtn"
+                    BackgroundColor="Transparent"
+                    BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    BorderWidth="2"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    SemanticProperties.Hint="Navigate to timecard page" />
+
             </StackLayout>
         </Border>
 

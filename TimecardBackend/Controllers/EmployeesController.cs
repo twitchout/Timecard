@@ -100,4 +100,44 @@ public class EmployeesController : ControllerBase
         }
         return NoContent();
     }
+
+    /// <summary>
+    /// Authenticate employee login
+    /// </summary>
+    [HttpPost("login")]
+    public async Task<ActionResult<LoginResponseDto>> Login([FromBody] LoginDto dto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var result = await _employeeService.AuthenticateAsync(dto);
+        if (result == null)
+        {
+            return Unauthorized(new { message = "Invalid email or password" });
+        }
+
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Set or update password for an employee
+    /// </summary>
+    [HttpPost("{id}/set-password")]
+    public async Task<IActionResult> SetPassword(int id, [FromBody] SetPasswordDto dto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var success = await _employeeService.SetPasswordAsync(id, dto.Password);
+        if (!success)
+        {
+            return NotFound(new { message = "Employee not found" });
+        }
+
+        return Ok(new { message = "Password updated successfully" });
+    }
 }

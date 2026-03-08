@@ -7,6 +7,7 @@ public class TimeEntry
     public long ClockIn { get; set; }
     public long? ClockOut { get; set; }
     public string? Notes { get; set; }
+    public bool IsApproved { get; set; }
 }
 
 public class CreateTimeEntryDto

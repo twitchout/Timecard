@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TimecardApp"
+    xmlns:pages="clr-namespace:TimecardApp.Pages"
     xmlns:svg="http://www.w3.org/2000/svg"
     Title="TimecardApp"
     FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
@@ -16,6 +17,50 @@
             Title="Login"
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
+
+    </FlyoutItem>
+
+    <FlyoutItem x:Name="TimeclockFlyoutItem"
+                Title="Timeclock"
+                Icon="timeclock.png">
+
+        <ShellContent
+            Title="Timeclock"
+            ContentTemplate="{DataTemplate pages:Timeclock}"
+            Route="Timeclock" />
+
+    </FlyoutItem>
+
+    <FlyoutItem x:Name="TimecardFlyoutItem"
+                Title="Timecard"
+                Icon="timecard.png">
+
+        <ShellContent
+            Title="Timecard"
+            ContentTemplate="{DataTemplate pages:Timecard}"
+            Route="Timecard" />
+
+    </FlyoutItem>
+
+    <FlyoutItem x:Name="AdminFlyoutItem"
+                Title="Admin Panel"
+                Icon="admin.png">
+
+        <ShellContent
+            Title="Admin Panel"
+            ContentTemplate="{DataTemplate pages:AdminPanel}"
+            Route="AdminPanel" />
+
+    </FlyoutItem>
+
+    <FlyoutItem x:Name="LogoutFlyoutItem"
+                Title="Logout"
+                Icon="login.png">
+
+        <ShellContent
+            Title="Logout"
+            ContentTemplate="{DataTemplate pages:Logout}"
+            Route="Logout" />
 
     </FlyoutItem>
 

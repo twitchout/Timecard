@@ -3,31 +3,131 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TimecardApp.Pages.Timecard"
              Title="Timecard">
-    
-    <VerticalStackLayout
-        Padding="30,0"
-        Spacing="20"
-        VerticalOptions="Center">
 
-        <Border
-            StrokeShape="RoundRectangle 10"
-            MaximumWidthRequest="750"
-            Margin="0,0,0,100">
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,20"
+            Spacing="20">
 
-            <StackLayout
-                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}"
-                Padding="15">
+            <Label 
+                Text="This Week's Time Punches"
+                Style="{StaticResource Headline}"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                SemanticProperties.HeadingLevel="Level1"
+                Margin="0,0,0,10" />
 
-                <Label 
-                    Text="This Week's Time Punches:"
-                    VerticalOptions="Center"
-                    Style="{StaticResource Headline}"
-                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
-                    SemanticProperties.HeadingLevel="Level1" />
+            <!-- Total Hours Summary -->
+            <Border StrokeShape="RoundRectangle 10"
+                    Padding="20"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    Margin="0,0,0,10">
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+                    <!-- Total Hours -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Total Hours This Week"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center" />
+                        <Label Text="{Binding TotalHoursThisWeek}"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
 
-                
+                    <!-- Estimated Paycheck -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="25">
+                        <Label Text="Estimated Paycheck"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center" />
+                        <Label Text="{Binding EstimatedPaycheck}"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
 
-            </StackLayout>
-        </Border>
-    </VerticalStackLayout>
+            <CollectionView ItemsSource="{Binding TimeEntries}"
+                            SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <Label Text="No time punches for this week yet."
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"
+                           Margin="0,20,0,0" />
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeShape="RoundRectangle 10"
+                                Padding="15"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}"
+                                Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}">
+
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" 
+                                  ColumnDefinitions="Auto,*"
+                                  RowSpacing="8"
+                                  ColumnSpacing="10">
+
+                                <!-- Clock In -->
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="Clock In:"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding ClockInTime}"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+
+                                <!-- Clock Out -->
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       Text="Clock Out:"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                <Label Grid.Row="1" Grid.Column="1"
+                                       Text="{Binding ClockOutTime}"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+
+                                <!-- Duration -->
+                                <Label Grid.Row="2" Grid.Column="0"
+                                       Text="Duration:"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                <Label Grid.Row="2" Grid.Column="1"
+                                       Text="{Binding Duration}"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+
+                                <!-- Status -->
+                                <Label Grid.Row="3" Grid.Column="0"
+                                       Text="Status:"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                <Label Grid.Row="3" Grid.Column="1"
+                                       Text="{Binding ApprovalStatus}"
+                                       TextColor="{Binding ApprovalColor}"
+                                       FontAttributes="Bold" />
+
+                                <!-- Notes -->
+                                <Label Grid.Row="4" Grid.Column="0"
+                                       Text="Notes:"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                <Label Grid.Row="4" Grid.Column="1"
+                                       Text="{Binding Notes}"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
