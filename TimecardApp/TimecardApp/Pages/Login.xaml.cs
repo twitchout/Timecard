@@ -10,11 +10,10 @@ namespace TimecardApp
             LoginBtn.Clicked += OnLoginBtnClicked;
         }
 
-        private async void OnLoginBtnClicked(object sender, EventArgs e)
+        private async void OnLoginBtnClicked(object? sender, EventArgs e)
         {
-            // TODO: create code to parse user input and perform appropriate login info
-
-            // temporarily just redirect user to main portion of app for testing before adding functionality
+            // For now, just navigate to Timeclock
+            // Backend connection is ready when you want to add employee ID validation
             await Shell.Current.GoToAsync(nameof(Timeclock));
         }
     }

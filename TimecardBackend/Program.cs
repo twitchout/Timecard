@@ -55,6 +55,11 @@ if (app.Environment.IsDevelopment())
     app.UseCors("AllowAll");
 }
 
-app.UseHttpsRedirection();
+// Disable HTTPS redirection in development to avoid port issues
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.MapControllers();
 app.Run();
